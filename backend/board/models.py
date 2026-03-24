@@ -1,7 +1,10 @@
 from django.db import models
 
 class Note(models.Model):
-    text = models.TextField()
+    text = models.TextField(default="Novo Post-it")
     x = models.IntegerField(default=100)
     y = models.IntegerField(default=100)
-    color = models.CharField(max_length=20, default='yellow')
+    color = models.CharField(max_length=20, default="yellow")
+
+    def __str__(self):
+        return f"Note {self.id} - {self.text[:10]}"
