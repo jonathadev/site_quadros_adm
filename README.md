@@ -22,6 +22,11 @@ site_quadros/
 │ └── ...resto do projeto Django...
 └── README.md
 
+<img width="269" height="240" alt="image" src="https://github.com/user-attachments/assets/8ca75db1-b956-4e0d-b2ac-8a36724ec9ef" />
+
+
+<img width="1329" height="728" alt="image" src="https://github.com/user-attachments/assets/c7a1275e-0a73-4e29-9995-c615c591d888" />
+
 
 ---
 
