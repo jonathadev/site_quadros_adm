@@ -27,6 +27,8 @@ site_quadros/
 
 <img width="1329" height="728" alt="image" src="https://github.com/user-attachments/assets/c7a1275e-0a73-4e29-9995-c615c591d888" />
 
+update 2 escolha cores, icone excluir, editar e sem erros deletar... salva em banco
+<img width="1335" height="730" alt="image" src="https://github.com/user-attachments/assets/6f5fda50-ccf3-4130-af7e-e129469ccab8" />
 
 ---
 
