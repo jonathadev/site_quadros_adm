@@ -1,43 +1,56 @@
+from django.shortcuts import render
+
+# Create your views here.
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Note
+
+from rest_framework import generics
 from .serializers import NoteSerializer
 
-@api_view(['GET'])
-def list_notes(request):
-    notes = Note.objects.all()
-    return Response(NoteSerializer(notes, many=True).data)
 
+@api_view(['GET'])
+def get_notes(request):
+    notes = list(Note.objects.values())
+    return Response(notes)
 
 @api_view(['POST'])
 def create_note(request):
-    serializer = NoteSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors)
+    note = Note.objects.create(
+        text=request.data.get('text'),
+        x=request.data.get('x'),
+        y=request.data.get('y'),
+        color=request.data.get('color')
+    )
+    return Response({"id": note.id})
 
-
-@api_view(['PUT'])
+@api_view(['POST'])
 def update_note(request, id):
     note = Note.objects.get(id=id)
-    serializer = NoteSerializer(note, data=request.data, partial=True)
-
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-
-    return Response(serializer.errors, status=400)
+    note.x = request.data.get('x')
+    note.y = request.data.get('y')
+    note.save()
+    return Response({"status": "ok"})
 
 
-@api_view(['DELETE'])
-def delete_note(request, id):
-    note = Note.objects.get(id=id)
-    note.delete()
-    return Response({"message": "Deleted"})
+# Listar todas as notas
+class NoteList(generics.ListAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
 
+# Criar nova nota
+class NoteCreate(generics.CreateAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
 
-@api_view(['DELETE'])
-def delete_all_notes(request):
-    Note.objects.all().delete()
-    return Response({"message": "Todas deletadas"})
+# Atualizar nota (posição ou texto)
+class NoteUpdate(generics.UpdateAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+    lookup_field = 'id'
+
+# Deletar nota
+class NoteDelete(generics.DestroyAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+    lookup_field = 'id'
